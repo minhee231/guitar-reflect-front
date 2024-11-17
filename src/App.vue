@@ -2,12 +2,14 @@
   <v-app>
     <v-main>
       <HelloWorld/>
-      {{ latestCurrency }}
+      <GuitarCalc :latestCurrencyData="latestCurrency"/>
+      <!-- {{ latestCurrency }} -->
     </v-main>
   </v-app>
 </template>
 
 <script>
+import GuitarCalc from './components/GuitarCalc.vue';
 import HelloWorld from './components/HelloWorld.vue'
 import currencyService from './service/currency-service';
 
@@ -16,6 +18,7 @@ export default {
 
   components: {
     HelloWorld,
+    GuitarCalc
   },
 
   data: () => ({
@@ -26,7 +29,7 @@ export default {
     async getLatestCurrency() {
       const response  = await currencyService.getLatestCurrency();
       console.log(response);
-      this.latestCurrency = response;
+      this.latestCurrency = response.data;
     }
   },
 
