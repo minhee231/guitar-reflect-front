@@ -15,8 +15,7 @@ export default {
   name: 'App',
 
   components: {
-    HelloWorld,
-    GuitarCalc
+    GuitarCalc,
   },
 
   data: () => ({
