@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import guitarCostCalculator from '@/service/guitar-cost-calculator';
+
 export default {
     name: "GuitarCostCalc",
     props: {
@@ -41,17 +43,26 @@ export default {
     }),
 
     methods: {
+        // getKRWCost() {
+        //     const sanitizedInput = String(this.inputJPYCost).replace(/[^0-9]/g, ""); 
+        //     const numericInput = parseFloat(sanitizedInput);
+
+        //     if (!isNaN(numericInput)) {
+        //         console.log(this.latestCurrency.currency.KRW);
+        //         console.log(numericInput);
+        //         this.guitarCost.KRW = new Intl.NumberFormat().format(Math.floor(numericInput * this.latestCurrency.currency.KRW));
+        //     } else {
+        //         this.test = 0;
+        //     }
+        // }
         getKRWCost() {
             const sanitizedInput = String(this.inputJPYCost).replace(/[^0-9]/g, ""); 
             const numericInput = parseFloat(sanitizedInput);
+            var krwCost = null
 
-            if (!isNaN(numericInput)) {
-                console.log(this.latestCurrency.currency.KRW);
-                console.log(numericInput);
-                this.guitarCost.KRW = new Intl.NumberFormat().format(Math.floor(numericInput * this.latestCurrency.currency.KRW));
-            } else {
-                this.test = 0;
-            }
+            krwCost = guitarCostCalculator.jpyToKrw(numericInput, this.latestCurrency.currency.KRW);
+
+            this.guitarCost.KRW = new Intl.NumberFormat().format(krwCost);
         }
     },
 }
