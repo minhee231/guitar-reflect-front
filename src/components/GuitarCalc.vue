@@ -12,13 +12,21 @@
         @input="getKRWCost"
     ></v-text-field>
     
-    <v-col>
-        <span>
-            ￦
-            <H1>{{ guitarCost.KRW }}원</H1>
-        </span>
-        <span>{{ guitarCost.KRW }}</span> 
+    <v-row>
+    <v-col cols="6">
+        <v-card class="inline-card">
+        <span class="text-h5 font-weight-bold ml-1 d-block">환율</span>
+        <span class="d-block">{{ guitarCost.KRW }}</span>
+        </v-card>
     </v-col>
+
+    <v-col cols="6">
+        <v-card class="inline-card">
+        <span class="text-h5 font-weight-bold ml-1 d-block">관세</span>
+        </v-card>
+    </v-col>
+    </v-row>
+
   </v-card>
     </v-row>
   </v-container>
@@ -78,4 +86,10 @@ export default {
 /*.container-custom {
     background-color: #517FF5;
 } */
+
+
+.inline-card {
+display: inline;
+margin: 10%;
+}
 </style>
