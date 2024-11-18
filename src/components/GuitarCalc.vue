@@ -13,7 +13,10 @@
     ></v-text-field>
     
     <v-col>
-        <span>{{ guitarCost.KRW }}원</span>
+        <span>
+            ￦
+            <H1>{{ guitarCost.KRW }}원</H1>
+        </span>
         <span>{{ guitarCost.KRW }}</span> 
     </v-col>
   </v-card>
@@ -45,7 +48,7 @@ export default {
             if (!isNaN(numericInput)) {
                 console.log(this.latestCurrency.currency.KRW);
                 console.log(numericInput);
-                this.guitarCost.KRW = Math.floor(numericInput * this.latestCurrency.currency.KRW);
+                this.guitarCost.KRW = new Intl.NumberFormat().format(Math.floor(numericInput * this.latestCurrency.currency.KRW));
             } else {
                 this.test = 0;
             }
@@ -57,7 +60,7 @@ export default {
 <style scoped>
 
 .portfolio-card {
-    min-width: 330px;
+    min-width: 30%;
     text-align: center;
 }
 
