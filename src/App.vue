@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld/>
       <GuitarCalc :latestCurrency="latestCurrency"/>
       <!-- {{ latestCurrency }} -->
     </v-main>
@@ -10,7 +9,6 @@
 
 <script>
 import GuitarCalc from './components/GuitarCalc.vue';
-import HelloWorld from './components/HelloWorld.vue'
 import currencyService from './service/currency-service';
 
 export default {
