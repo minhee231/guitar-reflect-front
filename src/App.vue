@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <HelloWorld/>
-      <GuitarCalc :latestCurrencyData="latestCurrency"/>
+      <GuitarCalc :latestCurrency="latestCurrency"/>
       <!-- {{ latestCurrency }} -->
     </v-main>
   </v-app>

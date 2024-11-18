@@ -1,13 +1,13 @@
 <template>
     {{ test }}
-    {{ latestCurrencyData }}
+    {{ latestCurrency }}
 </template>
 
 <script>
 export default {
     name: "GuitarCostCalc",
     props: {
-        latestCurrencyData: {
+        latestCurrency: {
             type: Object,
             required: true
         },
@@ -19,13 +19,14 @@ export default {
 
     methods: {
         getKRWCost(inputJPYCost) {
-            console.log(this.latestCurrencyData.currency.KRW);
-             this.test = Math.floor(inputJPYCost * this.latestCurrencyData.currency.KRW);
+            console.log(this.latestCurrency.currency.KRW);
+             this.test = Math.floor(inputJPYCost * this.latestCurrency.currency.KRW);
             
         }
     },
 
     watch: {
+        //테스트임
         latestCurrencyData: {
             immediate: true,
             handler(newData) {
