@@ -12,6 +12,8 @@ export default {
         if (guitarCostUsd > 800) {
             finalDuty = (guitarCostUsd - 800) * 0.08;
         }
+
+        console.log("::::"+guitarCostUsd + ":"+finalDuty)
         return finalDuty;
     },
     

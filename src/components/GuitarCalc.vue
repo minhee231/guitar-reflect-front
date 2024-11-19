@@ -1,32 +1,24 @@
 <template>
     {{ latestCurrency }}
-    
-    
-
     <v-container class="fill-height" fluid>
     <v-row class="justify-center align-center ">
     <v-card class="pa-4 container-custom portfolio-card rounded-xl" outlined>
         <v-text-field 
         label="¥가격 입력" 
         v-model="inputJPYCost" 
-        @input="getKRWCost"
+        @input="calculateCost"
     ></v-text-field>
-    
-    <v-row>
-    <v-col cols="6">
-        <v-card class="inline-card">
-        <span class="text-h5 font-weight-bold ml-1 d-block">환율</span>
-        <span class="d-block">{{ guitarCost.KRW }}</span>
-        </v-card>
-    </v-col>
 
-    <v-col cols="6">
-        <v-card class="inline-card">
-        <span class="text-h5 font-weight-bold ml-1 d-block">관세</span>
-        </v-card>
-    </v-col>
-    </v-row>
+    <div class="d-flex justify-center align-center">
+    <v-checkbox @change="calculateCost" v-model="costOption" label="관세" value="isDutyApplied" inline></v-checkbox>
+    <v-checkbox @change="calculateCost" v-model="costOption" label="부가세(한국)" value="isVATApplied" inline></v-checkbox>
+    <v-checkbox @change="calculateCost" v-model="costOption" label="관세 감면" value="isDutyDiscountApplied" inline></v-checkbox>    
+    <v-checkbox @change="calculateCost" v-model="costOption" label="택스 프리/리펀" value="isTaxFreeApplied" inline></v-checkbox>
 
+    </div>
+    <v-row style="margin: 3px;">dasd</v-row>
+    {{ finalPrice }}
+    {{ guitarCost.KRW }}
   </v-card>
     </v-row>
   </v-container>
@@ -46,33 +38,78 @@ export default {
 
     data: () => ({
         inputJPYCost: "",
-        test: 0,
         guitarCost: {},
+        costOption: [
+            "isDutyApplied",
+            "isVATApplied",
+            "isDutyDiscountApplied",
+            "isTaxFreeApplied",
+        ],
+        finalPrice: {
+            priceKrw: 0,
+            priceUsd: 0,
+            priceJpy: 0
+            },
+        purchaseMethod: [],
     }),
 
     methods: {
-        // getKRWCost() {
-        //     const sanitizedInput = String(this.inputJPYCost).replace(/[^0-9]/g, ""); 
-        //     const numericInput = parseFloat(sanitizedInput);
+        formatPrice(value) {
+            if (!value) return '0';
+            return new Intl.NumberFormat().format(Math.floor(value));
+        },
 
-        //     if (!isNaN(numericInput)) {
-        //         console.log(this.latestCurrency.currency.KRW);
-        //         console.log(numericInput);
-        //         this.guitarCost.KRW = new Intl.NumberFormat().format(Math.floor(numericInput * this.latestCurrency.currency.KRW));
-        //     } else {
-        //         this.test = 0;
-        //     }
-        // }
-        getKRWCost() {
+        //KRW 유지
+        calculateCost() {
+            console.log("새로 계산")
             const sanitizedInput = String(this.inputJPYCost).replace(/[^0-9]/g, ""); 
             const numericInput = parseFloat(sanitizedInput);
-            var krwCost = null
+            //let defaultPriceKrw = guitarCostCalculator.convertCurrency(numericInput, this.latestCurrency.currency.JPY.KRW);
+            this.finalPrice.priceJpy = numericInput
+            //let defaultPriceJpy = numericInput;
+            //let defaultPriceUsd = guitarCostCalculator.convertCurrency(numericInput, this.latestCurrency.currency.JPY.USD);
+            //let priceKrw = guitarCostCalculator.convertCurrency(numericInput, this.latestCurrency.currency.KRW);
+            // let priceKrw = defaultPriceKrw;
+            // let priceUsd = d
 
-            krwCost = guitarCostCalculator.jpyToKrw(numericInput, this.latestCurrency.currency.KRW);
+            if (this.costOption.includes("isDutyApplied")) {
+                
+                let duty = guitarCostCalculator.calculateDuty(this.finalPrice.priceUsd)
+                if (this.costOption.includes("isDutyDiscountApplied")) {
+                    duty = guitarCostCalculator.calculateDutyReduction(duty*this.latestCurrency.currency.USD.KRW)
+                    this.finalPrice.priceKrw += duty
+                }
 
-            this.guitarCost.KRW = new Intl.NumberFormat().format(krwCost);
-        }
+                else this.finalPrice.priceUsd += duty
+            }
+
+            if (this.costOption.includes("isVATApplied")) {
+                this.finalPrice.priceKrw = guitarCostCalculator.calculateGuitarVAT(this.finalPrice.priceKrw)
+            }
+
+            if (this.costOption.includes("isTaxFreeApplied")) {
+                this.finalPrice.priceJpy = guitarCostCalculator.calculateTaxFreePrice(this.finalPrice.priceJpy)
+            }
+
+        },
     },
+    watch: {
+    
+    'finalPrice.priceKrw'(newValue) {
+      this.finalPrice.priceUsd = newValue * this.latestCurrency.currency.KRW.USD
+      this.finalPrice.priceJpy = newValue * this.latestCurrency.currency.KRW.JPY
+    },
+
+    'finalPrice.priceUsd'(newValue) {
+      this.finalPrice.priceKrw = newValue * this.latestCurrency.currency.USD.KRW
+      this.finalPrice.priceJpy = newValue * this.latestCurrency.currency.USD.JPY
+    },
+    
+    'finalPrice.priceJpy'(newValue) {
+      this.finalPrice.priceKrw = newValue * this.latestCurrency.currency.JPY.KRW
+      this.finalPrice.priceUsd = newValue * this.latestCurrency.currency.JPY.USD
+    }
+  },
 }
 </script>
 
