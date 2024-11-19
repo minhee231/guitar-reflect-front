@@ -4,7 +4,10 @@ export default {
     },
 
     calculateGuitarVAT(guitarCost) {
-        return guitarCost * 1.1;
+        if (guitarCostUsd > 800) {
+            return guitarCost * 1.1;
+        }
+        else return guitarCost
     },
     
     calculateDuty(guitarCostUsd) {
