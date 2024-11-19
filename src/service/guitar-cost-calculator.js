@@ -7,15 +7,12 @@ export default {
         return guitarCost * 1.1;
     },
     
-    calculateGuitarDuty(guitarCostUsd) {
-        let finalCost = guitarCostUsd;
-    
+    calculateDuty(guitarCostUsd) {
+        let finalDuty = 0;
         if (guitarCostUsd > 800) {
-            finalCost -= 800;
-            finalCost *= 1.08;
+            finalDuty = (guitarCostUsd - 800) * 0.08;
         }
-    
-        return finalCost;
+        return finalDuty;
     },
     
     calculateTaxFreePrice(guitarCostJpy) {
@@ -25,5 +22,5 @@ export default {
 
         return guitarCostJpy
     },
-    
+
 }
