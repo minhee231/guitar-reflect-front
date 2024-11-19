@@ -71,25 +71,35 @@ export default {
             //let priceKrw = guitarCostCalculator.convertCurrency(numericInput, this.latestCurrency.currency.KRW);
             // let priceKrw = defaultPriceKrw;
             // let priceUsd = d
+            if (this.costOption.includes("isTaxFreeApplied")) {
+                this.finalPrice.priceJpy = guitarCostCalculator.calculateTaxFreePrice(this.finalPrice.priceJpy)
+            }
 
             if (this.costOption.includes("isDutyApplied")) {
                 
                 let duty = guitarCostCalculator.calculateDuty(this.finalPrice.priceUsd)
+                console.log("왜"+ duty)
                 if (this.costOption.includes("isDutyDiscountApplied")) {
                     duty = guitarCostCalculator.calculateDutyReduction(duty*this.latestCurrency.currency.USD.KRW)
+                    console.log("아니"+ duty)
                     this.finalPrice.priceKrw += duty
+                    console.log("진짜"+ this.finalPrice.priceKrw)
                 }
 
-                else this.finalPrice.priceUsd += duty
+                else {
+                    this.finalPrice.priceUsd += duty
+                }
             }
 
+            else {
+                this.costOption = this.costOption.filter(option => option !== "isDutyDiscountApplied");
+            }
+
+        
             if (this.costOption.includes("isVATApplied")) {
-                this.finalPrice.priceKrw = guitarCostCalculator.calculateGuitarVAT(this.finalPrice.priceKrw)
+                this.finalPrice.priceUsd = guitarCostCalculator.calculateGuitarVAT(this.finalPrice.priceUsd)
             }
 
-            if (this.costOption.includes("isTaxFreeApplied")) {
-                this.finalPrice.priceJpy = guitarCostCalculator.calculateTaxFreePrice(this.finalPrice.priceJpy)
-            }
 
         },
     },
