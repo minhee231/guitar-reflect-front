@@ -23,4 +23,13 @@ export default {
         return guitarCostJpy
     },
 
+    calculateDutyReduction(dutyKRW) {
+        let reducedDuty  = dutyKRW *= 0.7
+
+        if (reducedDuty  > 200000) {
+            reducedDuty  = 200000;
+        }
+
+        return reducedDuty 
+    }
 }
