@@ -18,6 +18,12 @@ export default {
         return finalCost;
     },
     
-    
+    calculateTaxFreePrice(guitarCostJpy) {
+        if (guitarCostJpy >= 5000 && guitarCostJpy <= 500000) {
+            guitarCostJpy *= 0.9
+        }
+
+        return guitarCostJpy
+    },
     
 }
