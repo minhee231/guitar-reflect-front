@@ -1,21 +1,21 @@
 <template>
   <v-app>
     <v-main>
-      <GuitarCalc :latestCurrency="latestCurrency"/>
+      <!-- <GuitarCalc :latestCurrency="latestCurrency"/> -->
       <!-- {{ latestCurrency }} -->
+      <router-view class="content"/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import GuitarCalc from './components/GuitarCalc.vue';
+//import GuitarCalc from './components/GuitarCalc.vue';
 import currencyService from './service/currency-service';
 
 export default {
   name: 'App',
 
   components: {
-    GuitarCalc,
   },
 
   data: () => ({
