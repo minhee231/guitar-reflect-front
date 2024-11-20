@@ -1,5 +1,4 @@
 <template>
-    {{ latestCurrency }}
     <v-container class="fill-height" fluid>
     <v-row class="justify-center align-center ">
     <v-card class="pa-4 container-custom portfolio-card rounded-xl" outlined>
@@ -16,9 +15,12 @@
     <v-checkbox @change="calculateCost" v-model="costOption" label="택스 프리/리펀" value="isTaxFreeApplied" inline></v-checkbox>
 
     </div>
-    <v-row style="margin: 3px;">dasd</v-row>
-    {{ finalPrice }}
-    {{ guitarCost.KRW }}
+    <h2>KRW</h2>
+    <p> ￦{{ finalPrice.priceKrw }}</p>
+    <h2>JPY</h2>
+    <p> ￥{{ finalPrice.priceJpy }}</p>
+    <h2>USD</h2>
+    <p> ${{ finalPrice.priceUsd }}</p>
   </v-card>
     </v-row>
   </v-container>
@@ -61,7 +63,6 @@ export default {
 
         //USD 유지
         calculateCost() {
-            console.log("새로 계산@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
             const sanitizedInput = String(this.inputJPYCost).replace(/[^0-9]/g, ""); 
             const numericInput = parseFloat(sanitizedInput);
             
@@ -76,22 +77,17 @@ export default {
 
             if (this.costOption.includes("isDutyApplied")) { //관세 부가
                 
-                // let duty = guitarCostCalculator.calculateDuty(this.finalPrice.priceUsd)
                 let dutyUsd = guitarCostCalculator.calculateDuty(priceUsd);
-                console.log("관세 부가" + dutyUsd);
 
                 if (this.costOption.includes("isDutyDiscountApplied")) { //관세 감면
-                    // duty = guitarCostCalculator.calculateDutyReduction(duty*this.latestCurrency.currency.USD.KRW)
-                    //this.finalPrice.priceKrw += duty
                     //관세 감면은 한도가 20만원이기 때문에 KRW로 계산함 USD -> KRW 으로 보냄
-                    dutyUsd = guitarCostCalculator.calculateDutyReduction(dutyUsd * this.latestCurrency.currency.USD.KRW) * this.latestCurrency.currency.KRW.USD;
-                    console.log("감면한 관세" + dutyUsd * this.latestCurrency.currency.USD.KRW)
+                    console.log(guitarCostCalculator.calculateDutyReduction(dutyUsd * this.latestCurrency.currency.USD.KRW))
+                    dutyUsd -= guitarCostCalculator.calculateDutyReduction(dutyUsd * this.latestCurrency.currency.USD.KRW) * this.latestCurrency.currency.KRW.USD;
                     priceUsd += dutyUsd
                 }
 
                 else {
                     //감세 감면 비활성화 시
-                    // this.finalPrice.priceUsd += duty
                     priceUsd += dutyUsd
                 }
             }
@@ -112,40 +108,17 @@ export default {
             this.finalPrice.priceJpy = this.formatPrice(priceUsd * this.latestCurrency.currency.USD.JPY)
         },
     },
-//     watch: {
-    
-//     'finalPrice.priceKrw'(newValue) {
-//       this.finalPrice.priceUsd = newValue * this.latestCurrency.currency.KRW.USD
-//       this.finalPrice.priceJpy = newValue * this.latestCurrency.currency.KRW.JPY
-//       //console.log("KRW 변동")
-//     },
 
-//     'finalPrice.priceUsd'(newValue) {
-//       this.finalPrice.priceKrw = newValue * this.latestCurrency.currency.USD.KRW
-//       this.finalPrice.priceJpy = newValue * this.latestCurrency.currency.USD.JPY
-//       //console.log("USD 변동")
-//     },
-    
-//     'finalPrice.priceJpy'(newValue) {
-//       this.finalPrice.priceKrw = newValue * this.latestCurrency.currency.JPY.KRW
-//       this.finalPrice.priceUsd = newValue * this.latestCurrency.currency.JPY.USD
-//       console.log("JPY 변동")
-//     }
-//   },
 }
 </script>
 
 <style scoped>
 
 .portfolio-card {
-    min-width: 30%;
+    min-width: 25%;
     text-align: center;
+    max-width: 40%;
 }
-
-/*.container-custom {
-    background-color: #517FF5;
-} */
-
 
 .inline-card {
 display: inline;
