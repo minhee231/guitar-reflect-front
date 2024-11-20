@@ -6,7 +6,9 @@
             class="me-4 "
             color="grey-darken-4"
             size="32"
-          ></v-avatar>
+          > <v-img :src="headerIcon">
+            </v-img>
+        </v-avatar>
   
           <v-btn
             v-for="link in links"
@@ -24,6 +26,8 @@
   </template>
   
   <script setup>
+  import headerIcon from '@/assets/headerIcon.png'
+
     const links = [
       'Dashboard',
       'Messages',

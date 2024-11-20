@@ -6,6 +6,11 @@ const routes = [
     name: 'Home',
     component: () => import('@/views/HomeView.vue'),
   },
+  {
+    path: '/digimart',
+    name: 'digimart',
+    component: () => import('@/views/DigiMartView.vue'),
+  },
   
 ];
 
