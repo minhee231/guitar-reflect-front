@@ -15,6 +15,7 @@
     <v-checkbox @change="calculateCost" v-model="costOption" label="택스 프리/리펀" value="isTaxFreeApplied" inline></v-checkbox>
 
     </div>
+    <v-divider class="my-3"></v-divider>
     <!-- <div>
         <h2>현지 구매</h2>
         <span class="text-h6 font-weight-bold text-white">KRW</span>
