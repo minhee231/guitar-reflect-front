@@ -165,9 +165,9 @@ export default {
 <style scoped>
 
 .portfolio-card {
-    min-width: 30%;
+    min-width: 35%;
     text-align: center;
-    max-width: 40%;
+    max-width: 45%;
 }
 
 .inline-card {
