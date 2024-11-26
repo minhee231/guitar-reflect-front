@@ -15,12 +15,39 @@
     <v-checkbox @change="calculateCost" v-model="costOption" label="택스 프리/리펀" value="isTaxFreeApplied" inline></v-checkbox>
 
     </div>
-    <h2>KRW</h2>
-    <p> ￦{{ finalPrice.priceKrw }}</p>
-    <h2>JPY</h2>
-    <p> ￥{{ finalPrice.priceJpy }}</p>
-    <h2>USD</h2>
-    <p> ${{ finalPrice.priceUsd }}</p>
+    <!-- <div>
+        <h2>현지 구매</h2>
+        <span class="text-h6 font-weight-bold text-white">KRW</span>
+        <v-spacer></v-spacer>   
+        <span class="text-h6 text-white">{{ finalPrice.priceKrw }}</span>
+        <h2>KRW</h2>
+        <p> ￦{{ finalPrice.priceKrw }}</p>
+        <h2>JPY</h2>
+        <p> ￥{{ finalPrice.priceJpy }}</p>
+        <h2>USD</h2>
+        <p> ${{ finalPrice.priceUsd }}</p>
+    </div> -->
+
+    <v-row class="d-flex justify-center align-center">
+        <v-col class="text-center">
+            <!-- <h1 class="GmarketSansFont">현지 구매</h1> -->
+            <h2 style="color: #BDBDBD;">현지 구매</h2>
+            <h2>￦ {{ finalPrice.priceKrw }}</h2>
+            <h2>￥ {{ finalPrice.priceJpy }}</h2>
+            <h2>$ {{ finalPrice.priceUsd }}</h2>
+        </v-col>
+
+        <v-divider vertical></v-divider>
+        <v-divider vertical></v-divider>
+        <v-divider vertical></v-divider>
+
+        <v-col class="text-center"> 
+            <h2 style="color: #BDBDBD;">직구</h2>
+            <h2>￦ {{ finalPrice.priceKrw }}</h2>
+            <h2>￥ {{ finalPrice.priceJpy }}</h2>
+            <h2>$ {{ finalPrice.priceUsd }}</h2>
+        </v-col>
+    </v-row>
   </v-card>
     </v-row>
   </v-container>
@@ -123,5 +150,16 @@ export default {
 .inline-card {
 display: inline;
 margin: 10%;
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.GmarketSansFont {
+    font-family: 'GmarketSansMedium', sans-serif;
 }
 </style>
