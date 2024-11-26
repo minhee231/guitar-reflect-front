@@ -3,17 +3,17 @@ export default {
         return amount * exchangeRate;
     },
 
-    calculateGuitarVAT(guitarCost) {
-        if (guitarCost > 800) {
+    calculateGuitarVAT(guitarCost, dutyFreeLimit) {
+        if (guitarCost > dutyFreeLimit) {
             return guitarCost * 1.1;
         }
         else return guitarCost
     },
     
-    calculateDuty(guitarCostUsd) {
+    calculateDuty(guitarCostUsd, dutyFreeLimit) {
         let finalDuty = 0;
-        if (guitarCostUsd > 800) {
-            finalDuty = (guitarCostUsd - 800) * 0.08;
+        if (guitarCostUsd > dutyFreeLimit) {
+            finalDuty = (guitarCostUsd - dutyFreeLimit) * 0.08;
         }
 
         console.log("::::"+guitarCostUsd + ":"+finalDuty)

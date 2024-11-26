@@ -32,9 +32,9 @@
         <v-col class="text-center">
             <!-- <h1 class="GmarketSansFont">현지 구매</h1> -->
             <h2 style="color: #BDBDBD;">현지 구매</h2>
-            <h2>￦ {{ finalPrice.priceKrw }}</h2>
-            <h2>￥ {{ finalPrice.priceJpy }}</h2>
-            <h2>$ {{ finalPrice.priceUsd }}</h2>
+            <h2>￦ {{ finalPrice.localPurchase.priceKrw }}</h2>
+            <h2>￥ {{ finalPrice.localPurchase.priceJpy }}</h2>
+            <h2>$ {{ finalPrice.localPurchase.priceUsd }}</h2>
         </v-col>
 
         <v-divider vertical></v-divider>
@@ -43,9 +43,9 @@
 
         <v-col class="text-center"> 
             <h2 style="color: #BDBDBD;">직구</h2>
-            <h2>￦ {{ finalPrice.priceKrw }}</h2>
-            <h2>￥ {{ finalPrice.priceJpy }}</h2>
-            <h2>$ {{ finalPrice.priceUsd }}</h2>
+            <h2>￦ {{ finalPrice.directPurchase.priceKrw }}</h2>
+            <h2>￥ {{ finalPrice.directPurchase.priceJpy }}</h2>
+            <h2>$ {{ finalPrice.directPurchase.priceUsd }}</h2>
         </v-col>
     </v-row>
   </v-card>
@@ -75,10 +75,19 @@ export default {
             "isTaxFreeApplied",
         ],
         finalPrice: {
-            priceKrw: 0,
-            priceUsd: 0,
-            priceJpy: 0
+            localPurchase: {
+                priceKrw: 0,
+                priceUsd: 0,
+                priceJpy: 0
             },
+            directPurchase: {
+                priceKrw: 0,
+                priceUsd: 0,
+                priceJpy: 0
+            },
+
+            
+        },
         purchaseMethod: [],
     }),
 
@@ -94,28 +103,31 @@ export default {
             const numericInput = parseFloat(sanitizedInput);
             
             //numericInput는 JPY
-            let priceUsd = numericInput * this.latestCurrency.currency.JPY.USD
+            let localPriceUsd = numericInput * this.latestCurrency.currency.JPY.USD
+            let directPriceUsd = localPriceUsd;
 
             if (this.costOption.includes("isTaxFreeApplied")) { //택스프리
                 //this.finalPrice.priceJpy = guitarCostCalculator.calculateTaxFreePrice(this.finalPrice.priceJpy)
                 //calculateTaxFreePrice 택스 프리는 일본에서 처리하기 때문에 JPY로 계산 USD -> JPY 해서 보냄
-                priceUsd = guitarCostCalculator.calculateTaxFreePrice(priceUsd * this.latestCurrency.currency.USD.JPY) * this.latestCurrency.currency.JPY.USD
+                localPriceUsd = guitarCostCalculator.calculateTaxFreePrice(localPriceUsd * this.latestCurrency.currency.USD.JPY) * this.latestCurrency.currency.JPY.USD;
             }
 
             if (this.costOption.includes("isDutyApplied")) { //관세 부가
                 
-                let dutyUsd = guitarCostCalculator.calculateDuty(priceUsd);
+                let localDutyUsd = guitarCostCalculator.calculateDuty(localPriceUsd, 800);
+                let directDutyUsd = guitarCostCalculator.calculateDuty(localPriceUsd, 150);
 
+                directPriceUsd += directDutyUsd
                 if (this.costOption.includes("isDutyDiscountApplied")) { //관세 감면
                     //관세 감면은 한도가 20만원이기 때문에 KRW로 계산함 USD -> KRW 으로 보냄
-                    console.log(guitarCostCalculator.calculateDutyReduction(dutyUsd * this.latestCurrency.currency.USD.KRW))
-                    dutyUsd -= guitarCostCalculator.calculateDutyReduction(dutyUsd * this.latestCurrency.currency.USD.KRW) * this.latestCurrency.currency.KRW.USD;
-                    priceUsd += dutyUsd
+                    console.log(guitarCostCalculator.calculateDutyReduction(localDutyUsd * this.latestCurrency.currency.USD.KRW))
+                    localDutyUsd -= guitarCostCalculator.calculateDutyReduction(localDutyUsd * this.latestCurrency.currency.USD.KRW) * this.latestCurrency.currency.KRW.USD;
+                    localPriceUsd += localDutyUsd
                 }
 
                 else {
                     //감세 감면 비활성화 시
-                    priceUsd += dutyUsd
+                    localPriceUsd += localDutyUsd
                 }
             }
 
@@ -127,12 +139,23 @@ export default {
             if (this.costOption.includes("isVATApplied")) {
                 this.finalPrice.priceUsd = guitarCostCalculator.calculateGuitarVAT(this.finalPrice.priceUsd)
                 //부가세도 USD로 계산함
-                priceUsd = guitarCostCalculator.calculateGuitarVAT(priceUsd);
+                localPriceUsd = guitarCostCalculator.calculateGuitarVAT(localPriceUsd, 800);
+                directPriceUsd = guitarCostCalculator.calculateGuitarVAT(directPriceUsd, 150);
             }
 
-            this.finalPrice.priceUsd = this.formatPrice(priceUsd)
-            this.finalPrice.priceKrw = this.formatPrice(priceUsd * this.latestCurrency.currency.USD.KRW)
-            this.finalPrice.priceJpy = this.formatPrice(priceUsd * this.latestCurrency.currency.USD.JPY)
+
+            //여기도 수정
+            this.finalPrice.directPurchase.priceUsd = this.formatPrice(directPriceUsd);
+            this.finalPrice.directPurchase.priceKrw = this.formatPrice(directPriceUsd * this.latestCurrency.currency.USD.KRW);
+            this.finalPrice.directPurchase.priceJpy = this.formatPrice(directPriceUsd * this.latestCurrency.currency.USD.JPY);
+
+            this.finalPrice.localPurchase.priceUsd = this.formatPrice(localPriceUsd);
+            this.finalPrice.localPurchase.priceKrw = this.formatPrice(localPriceUsd * this.latestCurrency.currency.USD.KRW);
+            this.finalPrice.localPurchase.priceJpy = this.formatPrice(localPriceUsd * this.latestCurrency.currency.USD.JPY);
+            
+            // this.finalPrice.priceUsd = this.formatPrice(localPriceUsd)
+            // this.finalPrice.priceKrw = this.formatPrice(localPriceUsd * this.latestCurrency.currency.USD.KRW)
+            // this.finalPrice.priceJpy = this.formatPrice(localPriceUsd * this.latestCurrency.currency.USD.JPY)
         },
     },
 
