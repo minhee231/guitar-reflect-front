@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height" fluid>
+
     <v-row class="justify-center align-center ">
     <v-card class="pa-4 container-custom portfolio-card rounded-xl bg-grey-darken-3" outlined>
         <v-text-field 
@@ -50,8 +50,7 @@
         </v-col>
     </v-row>
   </v-card>
-    </v-row>
-  </v-container>
+</v-row>
 </template>
 
 <script>
