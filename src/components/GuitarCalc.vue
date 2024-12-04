@@ -166,7 +166,7 @@ export default {
 <style scoped>
 
 .portfolio-card {
-    min-width: 35%;
+    min-width: 40%;
     text-align: center;
     max-width: 45%;
 }
