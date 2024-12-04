@@ -1,8 +1,6 @@
-<template class="bg-grey-darken-4">
+<template>
   <v-app class="bg-grey-darken-4">
-    <v-main class="bg-grey-darken-4">
-      <!-- <GuitarCalc :latestCurrency="latestCurrency"/> -->
-      <!-- {{ latestCurrency }} -->
+    <v-main>
       <mainHeader class="main-header" />
       <router-view class="content" :latestCurrency="latestCurrency"/>
     </v-main>
@@ -10,7 +8,6 @@
 </template>
 
 <script>
-import GuitarCalc from './components/GuitarCalc.vue';
 import currencyService from './service/currency-service';
 import MainHeader from './components/MainHeader.vue';
 
@@ -55,7 +52,7 @@ export default {
 
 
 #app {
-  background-color: #616161; /* 원하는 배경색 */
-  min-height: 100vh; /* 배경이 화면 전체를 덮도록 설정 */
+  background-color: #616161;
+  min-height: 100vh;
 }
 </style>
