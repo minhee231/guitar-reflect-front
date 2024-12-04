@@ -1,6 +1,6 @@
 <template>
 
-    <v-row class="justify-center align-center ">
+    <!-- <v-row class="justify-center align-center "> -->
     <!-- <v-card class="pa-4 container-custom portfolio-card rounded-xl bg-grey-darken-3" outlined> -->
     <v-card class="pa-4 container-custom portfolio-card bg-grey-darken-3" outlined>
         <v-text-field 
@@ -51,7 +51,7 @@
         </v-col>
     </v-row>
   </v-card>
-</v-row>
+<!-- </v-row> -->
 </template>
 
 <script>
@@ -99,6 +99,7 @@ export default {
         },
 
         //USD 유지
+        //이거 언젠간 뜯어 고쳐야 함 JPY -> USD,KRW에 갇히면 안됨 다른 나라도 처리 가능하게 동적으로 짜야 함
         calculateCost() {
             const sanitizedInput = String(this.inputJPYCost).replace(/[^0-9]/g, ""); 
             const numericInput = parseFloat(sanitizedInput);
@@ -166,7 +167,7 @@ export default {
 <style scoped>
 
 .portfolio-card {
-    min-width: 40%;
+    min-width: 100%;
     text-align: center;
     max-width: 45%;
 }
