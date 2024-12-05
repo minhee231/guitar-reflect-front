@@ -1,5 +1,5 @@
 <template>
-  <v-app class="bg-grey-darken-4">
+  <v-app class="theme-background">
     <v-main>
       <mainHeader class="main-header" />
       <router-view class="content" :latestCurrency="latestCurrency"/>
@@ -52,7 +52,6 @@ export default {
 
 
 #app {
-  background-color: #616161;
-  min-height: 100vh;
+  background-color: #121212;
 }
 </style>

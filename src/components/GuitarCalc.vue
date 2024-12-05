@@ -2,7 +2,7 @@
 
     <!-- <v-row class="justify-center align-center "> -->
     <!-- <v-card class="pa-4 container-custom portfolio-card rounded-xl bg-grey-darken-3" outlined> -->
-    <v-card class="pa-4 container-custom portfolio-card bg-grey-darken-3" outlined>
+    <v-card class="pa-4 container-custom portfolio-card theme-surface" outlined>
         <v-text-field 
         label="¥가격 입력" 
         v-model="inputJPYCost" 
