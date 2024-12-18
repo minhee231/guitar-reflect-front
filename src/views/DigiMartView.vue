@@ -1,14 +1,14 @@
 <template>
-    <GuitarCalc :latestCurrency="latestCurrency"/>
+    <LinkReceiver/>
 </template>
 
 <script>
-import GuitarCalc from '@/components/GuitarCalc.vue';
+import LinkReceiver from '@/components/LinkReceiver.vue';
 
 export default {
     name: "DigiMartView",
     components: {
-      GuitarCalc,  
+        LinkReceiver,  
     },
 
     props: {
