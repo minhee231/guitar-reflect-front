@@ -6,26 +6,25 @@
           <!-- 왼쪽 공백 -->
           <v-col cols="3" />
           
-          <!-- 가운데 아이콘과 버튼 -->
+          <!-- 가운데 -->
           <v-col cols="6">
             <div class="d-flex justify-space-between align-center">
-              <v-btn>
+              <v-btn @click="navigatorTo(home.path)">
                 <!-- <v-avatar color="grey-darken-4" size="40"> -->
                   <v-img :width="40" :src="guitarIcon"></v-img>
                 <!-- </v-avatar> -->
                 guitar-Reflect
               </v-btn>
-
-              <!-- 버튼 -->
               <div>
                 <v-btn
                   v-for="link in links"
-                  :key="link"
-                  class="mx-2"
+                  :key="link.name"
                   variant="text"
+                  class="mx-2"
                   text
+                  @click="navigatorTo(link.path)"
                 >
-                  {{ link }}
+                  {{ link.name }}
                 </v-btn>
               </div>
             </div>
@@ -39,14 +38,22 @@
   </v-app>
 </template>
 
-<script setup>
-import headerIcon from '@/assets/headerIcon.png'
+<script>
 import guitarIcon from '@/assets/guitar-icon-3rd.png'
 
-const links = [
-  'Dashboard',
-  'Messages',
-  'Profile',
-  'Updates',
-]
+export default {
+  name: "MainHeader",
+  data: () => ({
+    links: [
+      {"name": 'Digimart', "path": "/digimart"},
+    ],
+    home: {"name": "Home", "path": "/"}
+  }),
+
+  methods: {
+    navigatorTo(path) {
+      this.$router.push(path);
+    },
+  },
+}
 </script>
