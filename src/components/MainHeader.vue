@@ -10,8 +10,8 @@
           <v-col cols="6">
             <div class="d-flex justify-space-between align-center">
               <v-btn @click="navigatorTo(home.path)">
+                <v-img :width="25" :src="guitarIcon"></v-img>
                 <!-- <v-avatar color="grey-darken-4" size="40"> -->
-                  <v-img :width="40" :src="guitarIcon"></v-img>
                 <!-- </v-avatar> -->
                 guitar-Reflect
               </v-btn>
