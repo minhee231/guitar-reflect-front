@@ -18,7 +18,10 @@ export default {
     methods: {
         async getGuitarPrice() {
             const response = await guitarStoreService.getGuitarPrice({"url": this.inputLinkField});
-            console.log(response);
+            const data = response.data
+            const price = data.body.price;
+            console.log(price)
+            this.$emit("guitarPrice", price)
         },
 
         validateDigiMartLink() {

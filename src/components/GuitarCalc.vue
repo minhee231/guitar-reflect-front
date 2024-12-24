@@ -64,6 +64,9 @@ export default {
             type: Object,
             required: true
         },
+        inputPrice: {
+            type: Number,
+        },
     },
 
     data: () => ({
@@ -160,7 +163,17 @@ export default {
             // this.finalPrice.priceJpy = this.formatPrice(localPriceUsd * this.latestCurrency.currency.USD.JPY)
         },
     },
-
+    
+    watch: {
+    inputPrice: {
+      handler(newValue) {
+        if (newValue !== null) {
+            this.inputJPYCost = String(newValue);
+            this.calculateCost();
+        }
+      },
+    },
+  },
 }
 </script>
 
