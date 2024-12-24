@@ -4,6 +4,7 @@
         v-model="inputLinkField"
         @input="validateDigiMartLink"
         :loading="isLoading"
+        :error-messages="errorMessage ? [errorMessage] : []"
     >
     </v-text-field>
 </template>
@@ -15,6 +16,7 @@ export default {
     name: "LinkReceiver",
     data: () => ({
         inputLinkField: "",
+        errorMessage: "",
         isLoading: false
     }),
     methods: {
@@ -32,10 +34,12 @@ export default {
 
             if (digiMartPattern.test(this.inputLinkField)) {
                 console.log("Valid DigiMart URL");
+                this.errorMessage = '';
                 this.getGuitarPrice()
                 return true;
             } else {
                 console.log("Invalid DigiMart URL");
+                this.errorMessage = '유효한 디지마트 주소소를 입력해주세요';
                 return false;
             }
         }
