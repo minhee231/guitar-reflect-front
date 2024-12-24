@@ -1,8 +1,17 @@
 <template>
-    <LinkReceiver @guitarPrice="updatePrice"/>
-    <div style="max-width: 30%;">
+      <v-container fluid class="d-flex align-center" style="height: 80vh;">
+    <v-row>
+      <v-col cols="3">
+      </v-col>
+      <v-col cols="6">
+        <LinkReceiver @guitarPrice="updatePrice"/>
         <GuitarCalc :inputPrice="price" :latestCurrency="latestCurrency"/>
-    </div>
+      </v-col>
+      <v-col cols="3">
+      </v-col>
+    </v-row>
+  </v-container>
+    
 </template>
 
 <script>
