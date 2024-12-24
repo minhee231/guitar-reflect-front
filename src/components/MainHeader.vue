@@ -47,7 +47,8 @@ export default {
     links: [
       {"name": 'Digimart', "path": "/digimart"},
     ],
-    home: {"name": "Home", "path": "/"}
+    home: {"name": "Home", "path": "/"},
+    guitarIcon,
   }),
 
   methods: {
