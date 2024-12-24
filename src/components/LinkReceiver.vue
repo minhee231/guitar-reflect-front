@@ -39,7 +39,7 @@ export default {
                 return true;
             } else {
                 console.log("Invalid DigiMart URL");
-                this.errorMessage = '유효한 디지마트 주소소를 입력해주세요';
+                this.errorMessage = '유효한 디지마트 주소를 입력해주세요';
                 return false;
             }
         }
