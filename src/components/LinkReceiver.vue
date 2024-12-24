@@ -8,17 +8,25 @@
 </template>
 
 <script>
+import guitarStoreService from '@/service/guitar-store-service';
+
 export default {
     name: "LinkReceiver",
     data: () => ({
         inputLinkField: "",
     }),
     methods: {
+        async getGuitarPrice() {
+            const response = await guitarStoreService.getGuitarPrice({"url": this.inputLinkField});
+            console.log(response);
+        },
+
         validateDigiMartLink() {
             const digiMartPattern = /^(https?:\/\/)?(www\.)?digimart\.net\/([^\/]+\/){2,}([^\/]+\/?)?$/;
 
             if (digiMartPattern.test(this.inputLinkField)) {
                 console.log("Valid DigiMart URL");
+                this.getGuitarPrice()
                 return true;
             } else {
                 console.log("Invalid DigiMart URL");
