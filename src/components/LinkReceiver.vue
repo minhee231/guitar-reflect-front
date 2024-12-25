@@ -25,8 +25,10 @@ export default {
             const response = await guitarStoreService.getGuitarPrice({"url": this.inputLinkField});
             const data = response.data
             const price = data.body.price;
-            this.$emit("guitarPrice", price)
+            console.log(data);
             this.isLoading = false;
+            this.$emit("guitarPrice", price)
+            this.saveRecentViewedItems(this.inputLinkField ,data);
         },
 
         validateDigiMartLink() {
@@ -42,6 +44,17 @@ export default {
                 this.errorMessage = '유효한 디지마트 주소를 입력해주세요';
                 return false;
             }
+        },
+
+        saveRecentViewedItems(url, data) {
+            let savedValue = JSON.parse(localStorage.getItem("latestProduct")) || [];
+            savedValue.unshift({
+                "photoUrl": data.body.photo_url,
+                "url": url,
+            });
+
+            savedValue = savedValue.slice(0, 5);
+            localStorage.setItem("latestProduct",JSON.stringify(savedValue));
         }
     }
 };
