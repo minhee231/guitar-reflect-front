@@ -7,7 +7,9 @@
         <LinkReceiver @guitarPrice="updatePrice"/>
         <GuitarCalc :inputPrice="price" :latestCurrency="latestCurrency"/>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="2"></v-col>
+      <v-col cols="1">
+        <!-- <LatestProduct/> -->
       </v-col>
     </v-row>
   </v-container>
@@ -17,12 +19,14 @@
 <script>
 import LinkReceiver from '@/components/LinkReceiver.vue';
 import GuitarCalc from '@/components/GuitarCalc.vue';
+import LatestProduct from '@/components/LatestProduct.vue';
 
 export default {
     name: "DigiMartView",
     components: {
         LinkReceiver,
         GuitarCalc,
+        LatestProduct,
     },
 
     props: {
