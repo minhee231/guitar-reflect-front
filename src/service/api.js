@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: 'https://api.guitar.x-coll.com',
+    baseURL: 'http://localhost:8081',
     headers: {
         'Content-Type': 'application/json',
     }
